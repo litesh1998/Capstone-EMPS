@@ -91,6 +91,7 @@ model.add(Dense(7, activation='softmax'))
 
 
 model.load_weights('model.h5')
+model.save("comModel.h5")
 
 # prevents openCL usage and unnecessary logging messages
 cv2.ocl.setUseOpenCL(False)
