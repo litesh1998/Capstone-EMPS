@@ -14,7 +14,7 @@ class View (QWidget):
         self.setFixedSize(1000, 100)
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(QPalette.Window, QColor('blue'))
+        palette.setColor(QPalette.Window, QColor(0,0,0))
         self.setPalette(palette)
         self.mainLayout = QHBoxLayout()
         self.setLayout(self.mainLayout)
@@ -83,6 +83,7 @@ class View (QWidget):
 
     def options(self):
         lMain = QHBoxLayout()
+        v1Sub = QVBoxLayout()
         mute_unmute = QPushButton("SPK")
         mute_unmute.setFixedSize(50,40)
         sound_slider = QSlider()
@@ -90,8 +91,9 @@ class View (QWidget):
         sound_slider.setFixedSize(100,10)
         fullscrn = QPushButton("FSC")
         fullscrn.setFixedSize(50,40)
-        lMain.addWidget(mute_unmute)
-        lMain.addWidget(sound_slider)
+        v1Sub.addWidget(mute_unmute)
+        v1Sub.addWidget(sound_slider)
+        lMain.addLayout(v1Sub)
         lMain.addWidget(fullscrn)
         lMain.setAlignment(Qt.AlignRight)
         self.mainLayout.addLayout(lMain)

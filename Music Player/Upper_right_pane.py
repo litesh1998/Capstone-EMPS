@@ -12,20 +12,20 @@ class View (QWidget):
         self.setFixedSize(225,570)
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(QPalette.Window, QColor('red'))
+        palette.setColor(QPalette.Window, QColor(0,0,0))
         self.setPalette(palette)
         self.mainlayout = QVBoxLayout()
         # self.mainlayout.addStretch(1)
         self.setLayout(self.mainlayout)
         self.mainlayout.addWidget(self.label())
         self.mainlayout.addWidget(self.list_())
-        
+
 
     def label(self):
         label = QLabel("Song Queue")
-        label.setStyleSheet("font-size:25px;font-family:'Serif';font-weight:bold")
+        label.setStyleSheet("color: white; font-size:25px;font-family:'Serif';font-weight:bold")
         return label
-    
+
     def list_(self):
         list_ = QListWidget()
         palette = self.palette()
@@ -33,8 +33,8 @@ class View (QWidget):
         list_.setPalette(palette)
         return list_
 
-        
-        
+
+
 
 if '__name__' == "__main__":
     app = QApplication([])

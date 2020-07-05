@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout
 from PyQt5.QtWidgets import QScrollArea, QSplitter, QPushButton, QLabel
+from PyQt5.QtGui import QPainter, QColor, QPalette
 import sys
 import Upper_left_pane as ULP
 import Upper_right_pane as URP
@@ -11,6 +12,10 @@ class View (QMainWindow):
         super().__init__()
         self.setWindowTitle("Music Player")
         self.setFixedSize(1025, 700)
+        self.setAutoFillBackground(True)
+        palette = self.palette()
+        palette.setColor(QPalette.Window, QColor(0,0,0))
+        self.setPalette(palette)
         self.mainLayout = QVBoxLayout()
         self._centralwidget = QWidget(self)
         self.setCentralWidget(self._centralwidget)
