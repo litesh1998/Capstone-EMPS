@@ -17,7 +17,7 @@ class View (QWidget):
         self.setLayout(self.mainLayout)
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(QPalette.Window, QColor(0,0,0))
+        palette.setColor(QPalette.Window, QColor(25,25,25))
         self.setPalette(palette)
         # self.mainLayout.addStretch(1)
 

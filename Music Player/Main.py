@@ -14,7 +14,7 @@ class View (QMainWindow):
         self.setFixedSize(1025, 700)
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(QPalette.Window, QColor(0,0,0))
+        palette.setColor(QPalette.Window, QColor(15,15,15))
         self.setPalette(palette)
         self.mainLayout = QVBoxLayout()
         self._centralwidget = QWidget(self)

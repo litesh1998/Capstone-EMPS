@@ -12,7 +12,7 @@ class View (QWidget):
         self.setFixedSize(225,570)
         self.setAutoFillBackground(True)
         palette = self.palette()
-        palette.setColor(QPalette.Window, QColor(0,0,0))
+        palette.setColor(QPalette.Window, QColor(25,25,25))
         self.setPalette(palette)
         self.mainlayout = QVBoxLayout()
         # self.mainlayout.addStretch(1)
