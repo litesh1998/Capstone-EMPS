@@ -47,7 +47,7 @@ class View (QMainWindow):
         self.mainLayout.addLayout(upper_pane_layout,1)
     def lower_pane(self):
         lay = QHBoxLayout()
-        lay.addWidget(BP.View())
+        lay.addWidget(BP.View(self))
         return lay
 
 app = QApplication([])

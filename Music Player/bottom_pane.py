@@ -8,8 +8,9 @@ import sys
 
 
 class View (QWidget):
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__()
+        self.parent = parent
         self.setWindowTitle("Music Player")
         self.setFixedSize(1000, 100)
         self.setAutoFillBackground(True)
@@ -100,7 +101,7 @@ class View (QWidget):
         self.mainLayout.addLayout(lMain)
 
     def fullscreen_mode(self):
-        self.QMainWindow.showFullScreen()
+        self.parent.showFullScreen()
 
 
 
