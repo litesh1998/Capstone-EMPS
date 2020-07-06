@@ -91,12 +91,16 @@ class View (QWidget):
         sound_slider.setFixedSize(100,10)
         fullscrn = QPushButton("FullScrn")
         fullscrn.setFixedSize(50,40)
+        fullscrn.clicked.connect(self.fullscreen_mode)
         v1Sub.addWidget(mute_unmute)
         v1Sub.addWidget(sound_slider)
         lMain.addLayout(v1Sub)
         lMain.addWidget(fullscrn)
         lMain.setAlignment(Qt.AlignRight)
         self.mainLayout.addLayout(lMain)
+
+    def fullscreen_mode(self):
+        self.QMainWindow.showFullScreen()
 
 
 
