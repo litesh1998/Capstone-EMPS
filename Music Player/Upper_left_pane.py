@@ -1,7 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu
-from PyQt5.QtWidgets import QCheckBox, QGroupBox, QMenu, QPushButton
+from PyQt5.QtWidgets import QCheckBox, QGroupBox, QMenu, QPushButton, QFileDialog
 from PyQt5.QtWidgets import  QVBoxLayout, QHBoxLayout
 from PyQt5.QtGui import QPainter, QColor, QPalette
 
@@ -28,17 +28,24 @@ class View (QWidget):
         Btn1 = QPushButton("&PROFILE")
         Btn1.setFixedSize(175,50)
         Btn1.setStyleSheet("color: black;")
-        self.menuFIle = QtWidgets.QMenu(self)
-        self.menuFIle.setTitle("BROWSER")
-        #Btn2 = QPushButton("&BROWSER")
-        self.menuFIle.setFixedSize(175,50)
-        self.menuFIle.setStyleSheet("color: black;")
+        # self.menuFIle = QtWidgets.QMenu(self)
+        # self.menuFIle.setTitle("BROWSER")
+        # Btn2 = QPushButton("&BROWSER")
+        # self.menuFIle.setFixedSize(175,50)
+        # self.menuFIle.setStyleSheet("color: black;")
+        Btn2 = QPushButton("&BROWSE")
+        Btn2.setFixedSize(175,50)
+        Btn2.setStyleSheet("color: black;")
+        Btn2.clicked.connect(self.getFile)
+        # dlg = QFileDialog()
+        # dlg.setFileMode(QFileDialog.AnyFile)
+        # dlg.setFilter("Audio files (*.mp3 *.wav *.m4a)")
         Btn3 = QPushButton("&HISTORY")
         Btn3.setFixedSize(175,50)
         Btn3.setStyleSheet("color: black;")
         vbox = QVBoxLayout()
         vbox.addWidget(Btn1)
-        vbox.addWidget(self.menuFIle)
+        vbox.addWidget(Btn2)
         vbox.addWidget(Btn3)
         vbox.addStretch(0)
         groupBox.setFixedWidth(200)
@@ -47,7 +54,7 @@ class View (QWidget):
         return groupBox
 
     def left_pane_middle(self):
-        groupBox = QGroupBox("Your Liberary")
+        groupBox = QGroupBox("Your Library")
         groupBox.setStyleSheet("color: white;")
         Btn1 = QPushButton("&Recently Played")
         Btn1.setFixedSize(175,30)
@@ -74,7 +81,9 @@ class View (QWidget):
         NewPlaylist.setFixedSize(200,50)
         return NewPlaylist
 
-
+    # Linked to Browser button (Btn2) in Upper_left_pane.py
+    def getFile(self):
+        fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Audio files (*.mp3 *.wav *.m4a)")
 
 
 if __name__ == '__main__':
