@@ -13,25 +13,19 @@ Now Run this file in a new shell
 
 import requests as req
 
-URL = "http://localhost:5000/"
+URL = "http://localhost:5000/api/happy"
 
-data_to_send = {
-    "emotion": "happy"
-}
-
-
-# data = jsonify(data_to_send)
 response = None
 
 try:
     print("\nRequesting Song! Waiting for response...")
-    response = req.post(URL, data=data_to_send)
+    response = req.get(URL, stream=True)
 except Exception as e:
     print("\nCould not establish connection!")
 
 
 if response and response.status_code == 200:
     print("Response recieved with status: ", response.status_code)
-    print("Response is:", response.json())
+    print("Response is:", response)
 else:
     print("\nNo Response!\n")

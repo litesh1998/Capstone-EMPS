@@ -11,28 +11,16 @@ from musicapi import app
 from flask import request, jsonify, make_response, Response
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def home():
-    if request.method == 'POST':
-        req = request.args
-        #LOGIC HERE
-        print("\nRequeted data: ", req)
-        response = {
-            "msg": "OK",
-            "as": "POST"
-        }
-        # RETURN RESPONSE
-        return make_response(response)
-    if request.method == 'GET':
-        req = request.args
-        # LOGIC HERE
-        print(req)
-        response = {
-            "msg": "OK",
-            "as": "GET"
-        }
-        # RETURN RESPONSE
-        return make_response(response)
+    req = request.args
+    # print(req)
+    response = {
+        "msg": "OK",
+        "as": "GET"
+    }
+    # RETURN RESPONSE
+    return make_response(response)
 
 
 @app.route('/api/<emotion>', methods=['GET'])
@@ -49,7 +37,8 @@ def streamwav(emotion):
             while data:
                 yield data
                 data = fwav.read(1024)
-    return Response(generate(), mimetype="audio/m4a")
+    # content = Response.
+    return Response(generate(), mimetype="audio/m4a", headers={"name": songName})
 
 # @app.route('/api/<emotion>', methods=['GET'])
 # def Song(emotion):
