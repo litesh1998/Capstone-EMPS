@@ -8,9 +8,9 @@ MAIN REQUEST HADNLING LOGIC
 # IMPORTS
 import os
 from musicapi import app
-from .apiUtil import generate
 from flask import request, jsonify, make_response, Response
 
+from musicapi.apiUtil import generate, getSongsList, getSong
 
 @app.route('/', methods=['GET'])
 def home():
@@ -25,12 +25,15 @@ def home():
 
 
 @app.route('/api/<emotion>', methods=['GET'])
-def streamwav(emotion):
-    cwd = os.getcwd()
-    loc = os.path.join(cwd, 'musicapi', 'static', 'songs', emotion)
-    content = os.listdir(loc)
-    songName = content[0]
-    songPath = os.path.join(loc, songName)
-    return Response(generate(songPath), mimetype="audio/m4a", headers={"name": songName})
+def Emotion(emotion):
+    song_list = getSongsList(emotion)
+    return Response(song_list, headers={"playlist": f"{emotion}", "length": len(song_list)})
 
-#
+@app.route('/song/<song_id>')
+def SendSong(song_id):
+    song = getSong(song_id)
+    if song:
+        print(song.path)
+        return Response(generate(song.path), mimetype="audio/m4a", headers={"song": song})
+    else:
+        return Response("Song Not found", status=404)
