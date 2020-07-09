@@ -1,6 +1,6 @@
 import mongoengine as mongo
 
-db = mongo.connect(db='blogsDB')
+db = mongo.connect(db='musicapi')
 
 
 
