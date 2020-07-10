@@ -25,5 +25,5 @@ class PlayList(db.Document):
 
     meta = {
         'collection': 'playlists',
-        'indexes': ['name', 'user']
+        'indexes': ['name']
     }
