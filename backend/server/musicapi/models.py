@@ -1,7 +1,5 @@
 from musicapi import db
 
-# print(db)
-
 class User(db.Document):
     username = db.StringField(required=True, unique=True, min_length=3, max_length=12)
     password = db.StringField(required=True, min_length=5)
@@ -27,5 +25,5 @@ class PlayList(db.Document):
 
     meta = {
         'collection': 'playlists',
-        'indexes': ['name']
+        'indexes': ['name', 'user']
     }

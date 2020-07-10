@@ -7,14 +7,13 @@ MAIN REQUEST HADNLING LOGIC
 
 # IMPORTS
 import os
-from musicapi import app
-from flask import request, jsonify, make_response, Response
-
+from flask import Response, make_response
 from musicapi.apiUtil import generate, getSongsList, getSong
+from musicapi import app
 
 @app.route('/', methods=['GET'])
 def home():
-    req = request.args
+    # req = request.args
     # print(req)
     response = {
         "msg": "OK",

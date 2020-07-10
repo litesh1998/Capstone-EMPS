@@ -1,5 +1,4 @@
 import os
-from musicapi import db
 from musicapi.models import Song
 
 CWD = os.getcwd()
@@ -22,5 +21,6 @@ def scanAndUpdateDB():
                     emotion= emotion
                 )
                 song_doc.save()
+                print(f"{song} added to database successfully!")
             
 
