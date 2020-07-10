@@ -1,33 +1,29 @@
-import mongoengine as mongo
+from musicapi import db
 
-db = mongo.connect(db='musicapi')
-
-
-
-class User(mongo.Document):
-    username = mongo.fields.StringField(required=True, unique=True, min_length=3, max_length=12)
-    password = mongo.fields.StringField(required=True, min_length=5)
+class User(db.Document):
+    username = db.StringField(required=True, unique=True, min_length=3, max_length=12)
+    password = db.StringField(required=True, min_length=5)
 
     meta = {
         'collection': 'users',
         'indexes': ['username']
     }
 
-class Song(mongo.Document):
-    name = mongo.fields.StringField(required=True)
-    emotion = mongo.fields.StringField(default='Neutral', max_length=20)
-    path = mongo.fields.StringField(required=True, unique=True)
+class Song(db.Document):
+    name = db.StringField(required=True)
+    emotion = db.StringField(default='Neutral', max_length=20)
+    path = db.StringField(required=True, unique=True)
 
     meta = {
         'collection': 'songs',
         'indexes': ['emotion']
     }
 
-class PlayList(mongo.Document):
-    name = mongo.fields.StringField(required=True, unique=True)
-    song_list = mongo.fields.ListField(mongo.ReferenceField(Song))
+class PlayList(db.Document):
+    name = db.StringField(required=True, unique=True)
+    song_list = db.ListField(db.ReferenceField(Song))
 
     meta = {
         'collection': 'playlists',
-        'indexes': ['name']
+        'indexes': ['name', 'user']
     }
