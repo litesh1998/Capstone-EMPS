@@ -34,10 +34,11 @@ class View (QMainWindow):
 
         playlist_heading = QLabel("PLAYLIST")
         playlist_heading.setStyleSheet("font-size: 20px; color: #ffffff; margin-bottom: 10px;")
+        
         playlist_widget = QScrollArea()
-        playlist_widget.setStyleSheet("background-color: rbg(255,0,255)")
-        # middle_pane_layout.addStretch(1)
+        playlist_widget.
 
+        # middle_pane_layout.addStretch(1)
         playlist_layout.addWidget(playlist_heading)
         playlist_layout.addWidget(playlist_widget)
 
