@@ -26,7 +26,8 @@ def home():
 @app.route('/api/<emotion>', methods=['GET'])
 def Emotion(emotion):
     song_list = getSongsList(emotion)
-    return Response(song_list, headers={"playlist": f"{emotion}", "length": len(song_list)})
+    
+    return make_response(song_list)
 
 @app.route('/song/<song_id>')
 def SendSong(song_id):

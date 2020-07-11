@@ -12,22 +12,23 @@ def scanAndUpdateDB():
         emotionFolderContent = os.listdir(os.path.join(SONG_DIR, Dir))
         for song in emotionFolderContent:
             # print(song)
-            song_doc = Song(
-                    name= song,
-                    path= os.path.join(SONG_DIR, emotion, song),
-                    emotion= emotion
-                )
-            foundSong = Song.objects(name= song)[0]
+            # song_doc = Song(
+            #         name= song,
+            #         path= os.path.join(SONG_DIR, emotion, song),
+            #         emotion= emotion
+            #     )
+            foundSong = Song.objects(name=song)
             # print(foundSong)
             if foundSong:
                 print(Fore.GREEN+f"{song} already in database.\nChecking for change in path..."+Fore.RESET)
                 newPath = os.path.join(SONG_DIR, emotion, song)
-                if newPath != foundSong.path:
-                    foundSong.path = newPath
-                    foundSong.save()
-                    print(Fore.GREEN+f'Paths of song updated'+Fore.RESET)
-                else:
-                    print(Fore.GREEN+"No change in file path detected..."+Fore.RESET)
+                for FoundSong in foundSong:
+                    if newPath != FoundSong.path:
+                        FoundSong.path = newPath
+                        FoundSong.save()
+                        print(Fore.GREEN+f'Paths of song updated'+Fore.RESET)
+                    else:
+                        print(Fore.GREEN+"No change in file path detected..."+Fore.RESET)
             else:
                 song_doc = Song(
                     name= song,

@@ -1,23 +1,38 @@
-import vlc, requests
+import vlc, requests, json
 from time import sleep
 
-# emotion = 'happy'
-# URL = f"http://localhost:5000/api/{emotion}"
+emotion = 'happy'
+URL = f"http://localhost:5000/api/{emotion}"
 
-objId = '5f081156182ca7df091d040d'
-URL = f"http://localhost:5000/song/{objId}"
+# objId = '5f081156182ca7df091d040d'
+# URL = f"http://localhost:5000/song/{objId}"
 
 
 response = requests.get(URL)
+data = json.loads(response.content)
+print("Playlist is (content):\n", data)
+print("Playlist is (headers):\n", response.headers)
 
-player = vlc.MediaPlayer(URL)
-print("Playing song", response.headers)
 
-status = player.play()
-sleep(3)
+playlist = data['songs']
 
-while player.is_playing():
-        continue
+print("Playlist is:")
+for song in playlist:
+        print(f"{song['id']}:\t{song['name']}\t|\t{song['emotion']} ")
 
-print(status)
+
+##TO PLAY THE SONG IN PLAYLIST, UNCOMMENT THE BELOW BLOCK. ALL THE SONGS WILL PLAY IN SEQUENCE
+
+# for song in playlist:
+#         player = vlc.MediaPlayer(f"http://localhost:5000/song/{song['id']}")
+#         print(f"Playing song {song['name']}")
+#         print(f"It is a {song['emotion']} song")
+
+#         status = player.play()
+#         sleep(3)
+
+#         while player.is_playing():
+#                 continue
+
+# print(status)
 print("Done")
