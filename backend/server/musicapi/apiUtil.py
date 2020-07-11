@@ -1,6 +1,6 @@
 import os
 from musicapi.models import Song
-from bson.objectid import  ObjectId
+from colorama import Fore
 
 #-------------------------------------------------------------------------
 # Function to send music data in multiple packets to avoid buffering
@@ -41,5 +41,5 @@ def getSong(songid):
     if foundSong:
         return foundSong
     else:
-        print("SONG NOT FOUND")
+        print(Fore.RED+"SONG NOT FOUND"+Fore.RESET)
         return None

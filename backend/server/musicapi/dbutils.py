@@ -1,5 +1,6 @@
 import os
 from musicapi.models import Song
+from colorama import Fore
 
 CWD = os.getcwd()
 SONG_DIR = os.path.join(CWD, 'musicapi', 'static', 'songs')
@@ -19,14 +20,14 @@ def scanAndUpdateDB():
             foundSong = Song.objects(name= song)[0]
             # print(foundSong)
             if foundSong:
-                print(f"{song} already in database. Checking for change in path...")
+                print(Fore.GREEN+f"{song} already in database.\nChecking for change in path..."+Fore.RESET)
                 newPath = os.path.join(SONG_DIR, emotion, song)
                 if newPath != foundSong.path:
                     foundSong.path = newPath
                     foundSong.save()
-                    print(f'Paths of song updated')
+                    print(Fore.GREEN+f'Paths of song updated'+Fore.RESET)
                 else:
-                    print("No change in file path detected...")
+                    print(Fore.GREEN+"No change in file path detected..."+Fore.RESET)
             else:
                 song_doc = Song(
                     name= song,
@@ -34,4 +35,4 @@ def scanAndUpdateDB():
                     emotion= emotion
                 )
                 song_doc.save()
-                print(f"{song} added to database successfully!")
+                print(Fore.GREEN+f"{song} added to database successfully!"+Fore.RESET)
