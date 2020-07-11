@@ -12,7 +12,7 @@ app.config.from_pyfile('config.cfg')
 
 db = MongoEngine(app)
 
-# from musicapi.dbutils import scanAndUpdateDB
-# scanAndUpdateDB()
+from musicapi.dbutils import scanAndUpdateDB
+scanAndUpdateDB()
 
 from musicapi import routes
