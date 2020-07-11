@@ -24,27 +24,31 @@ class View (QMainWindow):
         self.mainLayout.addLayout(self.lower_pane())
     def upper_pane(self):
         upper_pane_layout = QHBoxLayout()
-        left_pane_layout = QVBoxLayout()
+        # left_pane_layout = QVBoxLayout()
         middle_pane_layout = QVBoxLayout()
-        right_pane_layout = QVBoxLayout()
-        w1 = QLabel("HEllo")
-        w2 = QLabel("HEllsdo")
-        w3 = QLabel("HEllsdfo")
-        w4 = QLabel("HElledfrtgyho")
-        w5 = QLabel("HElledfrtgyho")
-        w6 = QLabel("HElledfrtgyho")
+        
+        # left_pane_layout.addStretch(1)
+        # right_pane_layout = QVBoxLayout()
+        
+        playlist_layout = QVBoxLayout()
 
-        # left_pane_layout.addWidget(w1)
-        # left_pane_layout.addWidget(w2)
+        playlist_heading = QLabel("PLAYLIST")
+        playlist_heading.setStyleSheet("font-size: 20px; color: #ffffff; margin-bottom: 10px;")
+        playlist_widget = QScrollArea()
+        playlist_widget.setStyleSheet("background-color: rbg(255,0,255)")
+        # middle_pane_layout.addStretch(1)
+
+        playlist_layout.addWidget(playlist_heading)
+        playlist_layout.addWidget(playlist_widget)
+
+        middle_pane_layout.addLayout(playlist_layout)
+
         upper_pane_layout.addWidget(ULP.View())
-        left_pane_layout.addStretch(1)
-        middle_pane_layout.addWidget(w3)
-        middle_pane_layout.addWidget(w4)
-        middle_pane_layout.addStretch(1)
         upper_pane_layout.addLayout(middle_pane_layout)
         upper_pane_layout.addWidget(URP.View())
 
         self.mainLayout.addLayout(upper_pane_layout,1)
+
     def lower_pane(self):
         lay = QHBoxLayout()
         lay.addWidget(BP.View(self))
