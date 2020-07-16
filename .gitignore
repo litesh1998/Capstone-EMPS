@@ -2,3 +2,5 @@
 Music Player/.vscode/*
 .pyc
 .vscode/*
+env/*
+*.pyc
