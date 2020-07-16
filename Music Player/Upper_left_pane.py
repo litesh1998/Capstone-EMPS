@@ -1,9 +1,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QUrl
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu
 from PyQt5.QtWidgets import QCheckBox, QGroupBox, QMenu, QPushButton, QFileDialog
 from PyQt5.QtWidgets import  QVBoxLayout, QHBoxLayout
 from PyQt5.QtGui import QPainter, QColor, QPalette
+from PyQt5.QtMultimedia import QMediaPlaylist, QMediaPlayer, QMediaContent
 
 import sys
 class View (QWidget):
@@ -21,6 +22,8 @@ class View (QWidget):
         palette.setColor(QPalette.Window, QColor(25,25,25))
         self.setPalette(palette)
         # self.mainLayout.addStretch(1)
+        self.player = QMediaPlayer()
+        self.playlist = QMediaPlaylist()
 
     def left_pane_upper(self):
         groupBox = QGroupBox("User Assistance")
@@ -83,7 +86,17 @@ class View (QWidget):
 
     # Linked to Browser button (Btn2) in Upper_left_pane.py
     def getFile(self):
-        fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Audio files (*.mp3 *.wav *.m4a)")
+        song = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\',"Audio files (*.mp3 *.wav *.m4a)")
+
+        if song[0] != '':
+            url = QUrl.fromLocalFile(song[0])
+            if self.playlist.mediaCount() == 0:
+                self.playlist.addMedia(QMediaContent(url))
+                self.player.setPlaylist(self.playlist)
+                self.player.play()
+                #self.userAction =1
+            else:
+                self.playlist.addMedia(QMediaContent(url))
 
 
 if __name__ == '__main__':

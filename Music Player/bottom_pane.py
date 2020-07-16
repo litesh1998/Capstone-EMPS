@@ -3,7 +3,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 from PyQt5.QtWidgets import QGroupBox, QMenu, QPushButton,QLabel, QSlider
 from PyQt5.QtWidgets import  QVBoxLayout, QHBoxLayout, QGridLayout, QLayout
-from PyQt5.QtGui import QPainter, QColor, QPalette, QPixmap
+from PyQt5.QtGui import QPainter, QColor, QPalette, QPixmap, QIcon
+from PyQt5.QtMultimedia import QMediaPlaylist, QMediaPlayer, QMediaContent
 import sys
 
 
@@ -24,6 +25,8 @@ class View (QWidget):
         self.mainLayout.addLayout(self.songInfo())
         self.mainLayout.addLayout(self.musicBar())
         self.mainLayout.addLayout(self.options())
+        self.player = QMediaPlayer()
+        self.playlist = QMediaPlaylist()
 
 
     def songInfo(self):
@@ -69,25 +72,48 @@ class View (QWidget):
         #Shuffel = QPushButton("Shuf")
         #Shuffel.setFixedSize(50,40)
         self.previousButton = QtWidgets.QPushButton(self.centralWidget)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("images/prev.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.previousButton.setIcon(icon)
         #Previous = QPushButton("Prev")
         self.previousButton.setFixedSize(50,40)
-        self.playButton = QtWidgets.QPushButton(self.centralWidget)
-        #Play = QPushButton("Play")
-        self.playButton.setFixedSize(50,40)
+        #self.playButton = QtWidgets.QPushButton(self.centralWidget)
+        Play = QPushButton("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("images/play2.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        #self.playButton.setIcon(icon1)
+        Play.setIcon(icon1)
+        #self.playButto.setFixedSize(50,40)
+        Play.setFixedSize(50,40)
+        Play.clicked.connect(self.playhandler)
+
+
         self.nextButton = QtWidgets.QPushButton(self.centralWidget)
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("images/next1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.nextButton.setIcon(icon1)
         #next = QPushButton("Next")
         self.nextButton.setFixedSize(50,40)
-        self.stopButton = QtWidgets.QPushButton(self.centralWidget)
-        self.stopButton.setFixedSize(50,40)
+        #self.stopButton = QtWidgets.QPushButton(self.centralWidget)
+        Stop = QPushButton("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("images/stop1.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        #self.stopButton.setIcon(icon1)
+        Stop.setIcon(icon1)
+        #self.stopButton.setFixedSize(50,40)
+        Stop.setFixedSize(50,40)
+        Stop.clicked.connect(self.stophandler)
 
 
         #repeat = QPushButton("Rep")
         #repeat.setFixedSize(50,40)
         #slUpper.addWidget(Shuffel)
         slUpper.addWidget(self.previousButton)
-        slUpper.addWidget(self.playButton)
+        #slUpper.addWidget(self.playButton)
+        slUpper.addWidget(Play)
         slUpper.addWidget(self.nextButton)
-        slUpper.addWidget(self.stopButton)
+        #slUpper.addWidget(self.stopButton)
+        slUpper.addWidget(Stop)
         #slUpper.addWidget(repeat)
         slUpper.setAlignment(Qt.AlignCenter)
         lMain.addLayout(slUpper)
@@ -118,8 +144,23 @@ class View (QWidget):
         lMain.setAlignment(Qt.AlignRight)
         self.mainLayout.addLayout(lMain)
 
+    
+
     def fullscreen_mode(self):
         self.parent.showFullScreen()
+
+
+    def playhandler(self):
+        if self.playlist.mediaCount() == 0:
+            self.getFile()
+        elif self.playlist.mediaCount() != 0:
+            self.player.play()
+
+    def stophandler(self):
+        #self.userAction = 0
+        self.player.stop()
+        self.playlist.clear()
+        self.statusBar().showMessage("Stopped and cleared playlist")
 
 
 
