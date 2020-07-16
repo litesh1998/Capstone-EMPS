@@ -1,6 +1,6 @@
+*.cfg
+*.pyc
 .ipynb_checkpoints/*
 Music Player/.vscode/*
-*.pyc
 .vscode/*
 env/
-*.cfg

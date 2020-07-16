@@ -24,18 +24,16 @@ def callfunc():
 
     ##TO PLAY THE SONG IN PLAYLIST, UNCOMMENT THE BELOW BLOCK. ALL THE SONGS WILL PLAY IN SEQUENCE
 
-    for song in playlist:
-             player = vlc.MediaPlayer(f"http://localhost:5000/song/{song['id']}")
-             print(f"Playing song {song['name']}")
-             print(f"It is a {song['emotion']} song")
+    # for song in playlist:
+    #          player = vlc.MediaPlayer(f"http://localhost:5000/song/{song['id']}")
+    #          print(f"Playing song {song['name']}")
+    #          print(f"It is a {song['emotion']} song")
 
-             #status = player.play()
-             #sleep(10)
-             #status = player.stop()
-
-             #while player.is_playing():
-            #         continue
-    #print(status)
+    #          status = player.play()
+    #          sleep(3)
+    #          while player.is_playing():
+    #                 continue
+    # print(status)
     print("Done")
     return(playlist)
 
