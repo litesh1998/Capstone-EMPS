@@ -3,3 +3,4 @@ Music Player/.vscode/*
 *.pyc
 .vscode/*
 env/
+*.cfg
