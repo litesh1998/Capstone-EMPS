@@ -144,6 +144,8 @@ class View (QWidget):
         lMain.setAlignment(Qt.AlignRight)
         self.mainLayout.addLayout(lMain)
 
+    
+
     def fullscreen_mode(self):
         self.parent.showFullScreen()
 
