@@ -8,7 +8,7 @@ import Upper_right_pane as URP
 import bottom_pane as BP
 from time import sleep
 import vlc
-from functools import partialmethod
+from functools import partial
 
 #import C:/Users/Lipi/OneDrive/Documents/GitHub/Capstone-EMPS/backend/client/caller2.py as CA
 
@@ -50,6 +50,8 @@ class View (QMainWindow):
         playlist_heading.setStyleSheet("font-size: 20px; color: #ffffff; margin-bottom: 10px;")
 
         playlist_widget = QScrollArea()
+
+        playlist_layout.addWidget(playlist_heading)
         #self.buttons = []
         # for song in playsongs:
         #
@@ -86,13 +88,13 @@ class View (QMainWindow):
 
         for song in playsongs:
             button = QPushButton(song['name'])
-            i = partialmethod(self.helloprint, song['id'])
+            i = partial(self.helloprint, song['id'])
             # print("i= ",i)
             button.clicked.connect(i)
             playlist_layout.addWidget(button)
 
         # middle_pane_layout.addStretch(1)
-        playlist_layout.addWidget(playlist_heading)
+
 
         playlist_layout.addWidget(playlist_widget)
 
@@ -106,7 +108,7 @@ class View (QMainWindow):
 
     def helloprint(self, songid):
         print(songid)
-        # play_song(songid)
+        play_song(songid)
 
     def lower_pane(self):
         lay = QHBoxLayout()
