@@ -13,7 +13,7 @@ def generate(path:str):
         while data:
             yield data
             data = fwav.read(1024)
- 
+
 #--------------------------------------------------------------------------
 # Function to return Playlist
 def getSongsList(emotion):
@@ -25,7 +25,7 @@ def getSongsList(emotion):
     res = {"songs": []}
     for song in playlist:
         res['songs'].append({"id":str(song.id), "name": song.name, "emotion": song.emotion})
-    
+
     playlist_data = jsonify(res)
     return playlist_data
 

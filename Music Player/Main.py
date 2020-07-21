@@ -15,8 +15,11 @@ from Worker import Worker
 
 # some_file.py
 import sys
-# insert at 1, 0 is the script path (or '' in REPL)
-# sys.path.insert(1, 'C:/Users/Lipi/OneDrive/Documents/GitHub/Capstone-EMPS/backend/client')
+
+#insert at 1, 0 is the script path (or '' in REPL)
+sys.path.insert(1, 'C:/Users/Lipi/OneDrive/Documents/GitHub/Capstone-EMPS/faceEmotionDetector')
+import faceEmotion
+
 from client import callfunc, play_song
 
 playsongs = callfunc()
@@ -52,7 +55,8 @@ class View (QMainWindow):
         playlist_heading.setStyleSheet("font-size: 20px; color: #ffffff; margin-bottom: 10px;")
 
         playlist_widget = QScrollArea()
-        
+        playlist_layout.addWidget(playlist_heading)
+
         for song in playsongs:
             button = QPushButton(song['name'])
             # button.se
@@ -62,7 +66,7 @@ class View (QMainWindow):
             playlist_layout.addWidget(button)
 
         # middle_pane_layout.addStretch(1)
-        playlist_layout.addWidget(playlist_heading)
+
 
         playlist_layout.addWidget(playlist_widget)
 
