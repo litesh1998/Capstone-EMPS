@@ -14,10 +14,13 @@ from Worker import Worker
 #import C:/Users/Lipi/OneDrive/Documents/GitHub/Capstone-EMPS/backend/client/caller2.py as CA
 
 # some_file.py
+import os
 import sys
 
 #insert at 1, 0 is the script path (or '' in REPL)
-sys.path.insert(1, 'C:/Users/Lipi/OneDrive/Documents/GitHub/Capstone-EMPS/faceEmotionDetector')
+cwd = os.path.abspath("../")
+print(cwd)
+sys.path.insert(1, os.path.join(cwd, "faceEmotionDetector"))
 import faceEmotion
 
 from client import callfunc, play_song
