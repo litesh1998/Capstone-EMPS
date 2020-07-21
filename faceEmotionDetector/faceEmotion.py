@@ -8,7 +8,7 @@ import json
 import time
 
 dic = {}
-with open("pols.json") as file:
+with open("faceEmotionDetector\pols.json") as file:
     try:
         dic = json.load(file)
     except:
@@ -68,7 +68,7 @@ def faceEmotion():
     cv2.destroyAllWindows()
 
 def returnEmotion():
-    with open("pols.json") as file:
+    with open("faceEmotionDetector\pols.json") as file:
         dic = json.load(file)
         emDic={}
         for key,value in dic.items():
