@@ -21,7 +21,7 @@ def getSongsList(emotion):
     Function to return Playlist based on given emotion
     '''
     playlist = Song.objects(emotion=emotion)
-    playlist = random.sample(list(playlist), 3)
+    # playlist = random.sample(list(playlist), 3)
     res = {"songs": []}
     for song in playlist:
         res['songs'].append({"id":str(song.id), "name": song.name, "emotion": song.emotion})
