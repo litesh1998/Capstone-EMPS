@@ -1,9 +1,6 @@
 import numpy as np
-import argparse
-import matplotlib.pyplot as plt
 import cv2
 import tensorflow as tf
-import os
 import json
 import time
 
@@ -19,7 +16,7 @@ if dic == False:
 
 
 def faceEmotion():
-    model = tf.keras.models.load_model("comModel.h5")
+    model = tf.keras.models.load_model("faceEmotionDetector\comModel.h5")
     cv2.ocl.setUseOpenCL(False)
     emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful",
                     3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
@@ -31,7 +28,7 @@ def faceEmotion():
         ret, frame = cap.read()
         if not ret:
             return
-        facecasc = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+        facecasc = cv2.CascadeClassifier('faceEmotionDetector\haarcascade_frontalface_default.xml')
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = facecasc.detectMultiScale(
             gray, scaleFactor=1.3, minNeighbors=5)
@@ -52,7 +49,7 @@ def faceEmotion():
                 print("restartin polls")
             dic[emotion] += 1
             dic["time"] = time.time()
-            with open("pols.json", "w") as file:
+            with open("faceEmotionDetector\pols.json", "w") as file:
                 json.dump(dic, file)
             print(emotion)
             cv2.putText(frame, emotion_dict[maxindex], (x+20, y-60),
