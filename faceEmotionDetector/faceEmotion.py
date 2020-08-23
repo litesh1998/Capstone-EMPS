@@ -55,10 +55,10 @@ def faceEmotion():
             cv2.putText(frame, emotion_dict[maxindex], (x+20, y-60),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
-        # cv2.imshow('Video', cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
+            cv2.imshow('Video', cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-        if time.time()-t > 2:
+        if time.time()-t > 10:
             break
 
     cap.release()
@@ -72,10 +72,10 @@ def returnEmotion():
             if key != "time":
                 emDic[key]=value
         maxEmotion = max(emDic, key= lambda x: emDic[x]) 
-        print(maxEmotion) 
+        print("The Emotion is: ", maxEmotion) 
 
 
 
 if __name__ == "__main__":
-    # faceEmotion()
+    faceEmotion()
     returnEmotion()
