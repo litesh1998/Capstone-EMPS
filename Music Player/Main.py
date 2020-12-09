@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication,QMainWindow, QWidget
+from PyQt5.QtWidgets import QApplication, QGroupBox,QMainWindow, QWidget
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout
 from PyQt5.QtWidgets import QScrollArea, QSplitter, QPushButton, QLabel
 from PyQt5.QtGui import QPainter, QColor, QPalette
@@ -19,14 +19,14 @@ import sys
 
 #insert at 1, 0 is the script path (or '' in REPL)
 cwd = os.path.abspath("../")
-print(cwd)
+# print(cwd)
 sys.path.insert(1, os.path.join(cwd, "faceEmotionDetector"))
 import faceEmotion
 
 from client import callfunc, play_song
 
-playsongs = callfunc()
-print(playsongs)
+# playsongs = callfunc()
+# print(playsongs)
 
 class View (QMainWindow):
     def __init__(self):
@@ -42,52 +42,68 @@ class View (QMainWindow):
         self._centralwidget = QWidget(self)
         self.setCentralWidget(self._centralwidget)
         self._centralwidget.setLayout(self.mainLayout)
+        self.upper_pane_layout = QHBoxLayout()
         self.upper_pane()
         self.mainLayout.addLayout(self.lower_pane())
+
+
     def upper_pane(self):
-        upper_pane_layout = QHBoxLayout()
+       
         # left_pane_layout = QVBoxLayout()
-        middle_pane_layout = QVBoxLayout()
+        self.middle_pane_layout = QVBoxLayout()
 
-        # left_pane_layout.addStretch(1)
-        # right_pane_layout = QVBoxLayout()
-
-        playlist_layout = QVBoxLayout()
+        # self.groupBox = QGroupBox()
+        self.playlist_layout = QVBoxLayout()
 
         playlist_heading = QLabel("PLAYLIST")
         playlist_heading.setStyleSheet("font-size: 20px; color: #ffffff; margin-bottom: 10px;")
 
-        playlist_widget = QScrollArea()
-        playlist_layout.addWidget(playlist_heading)
+        self.playlist_layout.addWidget(playlist_heading)
+        
+        # self.groupBox.setLayout(self.playlist_layout)
 
-        for song in playsongs:
-            button = QPushButton(song['name'])
-            # button.se
-            i = partial(self.helloprint, song['id'])
-            # print("i= ",i)
-            button.clicked.connect(i)
-            playlist_layout.addWidget(button)
+        self.playlist_widget = QScrollArea()
+        # self.playlist_widget.setWidget(self.groupBox)
 
-        # middle_pane_layout.addStretch(1)
+        # # left_pane_layout.addStretch(1)
+        # # right_pane_layout = QVBoxLayout()
+
+        # playlist_layout = QVBoxLayout()
+
+        # playlist_heading = QLabel("PLAYLIST")
+        # playlist_heading.setStyleSheet("font-size: 20px; color: #ffffff; margin-bottom: 10px;")
+
+        # playlist_widget = QScrollArea()
+        # playlist_layout.addWidget(playlist_heading)
+
+        # for song in playsongs:
+        #     button = QPushButton(song['name'])
+        #     # button.se
+        #     i = partial(self.helloprint, song['id'])
+        #     # print("i= ",i)
+        #     button.clicked.connect(i)
+        #     playlist_layout.addWidget(button)
+
+        # # middle_pane_layout.addStretch(1)
+
+        self.playlist_layout.addWidget(self.playlist_widget)
 
 
-        playlist_layout.addWidget(playlist_widget)
+        self.middle_pane_layout.addLayout(self.playlist_layout)
 
-        middle_pane_layout.addLayout(playlist_layout)
+        self.upper_pane_layout.addWidget(ULP.View(self))
+        self.upper_pane_layout.addLayout(self.middle_pane_layout)
+        self.upper_pane_layout.addWidget(URP.View())
 
-        upper_pane_layout.addWidget(ULP.View())
-        upper_pane_layout.addLayout(middle_pane_layout)
-        upper_pane_layout.addWidget(URP.View())
+        self.mainLayout.addLayout(self.upper_pane_layout,1)
 
-        self.mainLayout.addLayout(upper_pane_layout,1)
+    # def helloprint(self, songid):
+    #     w = Worker(self.playSong, songid)
+    #     self.threadpool.start(w)
 
-    def helloprint(self, songid):
-        w = Worker(self.playSong, songid)
-        self.threadpool.start(w)
-
-    def playSong(self,songid):
-        print(songid)
-        play_song(songid)
+    # def playSong(self,songid):
+    #     print(songid)
+    #     play_song(songid)
 
     def lower_pane(self):
         lay = QHBoxLayout()

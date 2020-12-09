@@ -46,6 +46,7 @@ def getSong(songid):
     print(songid)
     foundSong = Song.objects.get(id=songid)
     if foundSong:
+        # print()
         return foundSong
     else:
         print(Fore.RED+"SONG NOT FOUND"+Fore.RESET)

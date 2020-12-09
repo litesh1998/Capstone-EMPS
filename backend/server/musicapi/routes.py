@@ -33,7 +33,8 @@ def Emotion(emotion):
 def SendSong(song_id):
     song = getSong(song_id)
     if song:
-        print(song.path)
+        # print(song.path)
+        # return song
         return Response(generate(song.path), mimetype="audio/m4a", headers={"song": song})
     else:
         return Response("Song Not found", status=404)
