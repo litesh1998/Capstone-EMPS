@@ -39,8 +39,13 @@ def callfunc(emotion='happy'):
 
 def play_song(songid):
     song = requests.get(f"http://localhost:5000/song/{songid}")
-
-    player = vlc.MediaPlayer(song.path)
-    player.play()
-    sleep(10)
-    player.stop()
+    try:
+        print("Debug: " , song.headers)
+        data = song.headers
+        player = vlc.MediaPlayer(song.headers.get("path"))
+        player.play()
+        sleep(10)
+        player.stop()
+    except Exception as e:
+        print(e)
+    

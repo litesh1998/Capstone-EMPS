@@ -4,6 +4,7 @@ import tensorflow as tf
 import json
 import time
 import os
+from colorama import Fore
 
 cwd = os.path.abspath("../")
 comModel = os.path.join(cwd, "faceEmotionDetector","comModel.h5")
@@ -57,13 +58,13 @@ def faceEmotion():
             if time.time()-dic["time"] >= 10:
                 dic = {"Angry": 0, "Disgusted": 0, "Fearful": 0, "Happy": 0,
                        "Neutral": 0, "Sad": 0, "Surprised": 0, "time": time.time()}
-                print("restartin polls")
+                print(Fore.MAGENTA + "restartin polls" + Fore.RESET)
             dic[emotion] += 1
             dic["time"] = time.time()
             # with open("faceEmotionDetector\pols.json", "w") as file:
             with open(pols, "w") as file:
                 json.dump(dic, file)
-            print(emotion)
+            print(Fore.BLUE + emotion + Fore.RESET, end = " | ")
             cv2.putText(frame, emotion_dict[maxindex], (x+20, y-60),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
@@ -72,7 +73,7 @@ def faceEmotion():
             break
         if time.time()-t > 5:
             break
-
+    print("\n")
     cap.release()
     cv2.destroyAllWindows()
 
@@ -85,7 +86,9 @@ def returnEmotion():
             if key != "time":
                 emDic[key]=value
         maxEmotion = max(emDic, key= lambda x: emDic[x]) 
-        print(maxEmotion) 
+        print(Fore.GREEN + "Final Detected Emotion:\t" + Fore.RESET + Fore.CYAN + maxEmotion + Fore.RESET)
+        return maxEmotion
+        
 
 
 

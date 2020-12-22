@@ -2,9 +2,11 @@ import os, random
 from musicapi.models import Song
 from colorama import Fore
 from flask import jsonify
-#-------------------------------------------------------------------------
+
+
+# -------------------------------------------------------------------------
 # Function to send music data in multiple packets to avoid buffering
-def generate(path:str):
+def generate(path: str):
     '''
     Function to send music data in multiple packets to avoid buffering
     '''
@@ -14,20 +16,23 @@ def generate(path:str):
             yield data
             data = fwav.read(1024)
 
-#--------------------------------------------------------------------------
+
+# --------------------------------------------------------------------------
 # Function to return Playlist
 def getSongsList(emotion):
-    '''
+    """
     Function to return Playlist based on given emotion
-    '''
+    """
+    emotion = emotion.lower()
     playlist = Song.objects(emotion=emotion)
     # playlist = random.sample(list(playlist), 3)
     res = {"songs": []}
     for song in playlist:
-        res['songs'].append({"id":str(song.id), "name": song.name, "emotion": song.emotion})
+        res['songs'].append({"id": str(song.id), "name": song.name, "emotion": song.emotion})
 
     playlist_data = jsonify(res)
     return playlist_data
+
 
 # def getSongsListold(emotion):
 #     cwd = os.getcwd()
@@ -37,17 +42,17 @@ def getSongsList(emotion):
 #     songPath = os.path.join(loc, songName)
 #     return [songPath]
 
-#----------------------------------------------------------------------------
+# ----------------------------------------------------------------------------
 # Funtion to return absolute path to required song
 def getSong(songid):
-    '''
-    Funtion to return absolute path to required song
-    '''
+    """
+    Function to return absolute path to required song
+    """
     print(songid)
     foundSong = Song.objects.get(id=songid)
     if foundSong:
         # print()
         return foundSong
     else:
-        print(Fore.RED+"SONG NOT FOUND"+Fore.RESET)
+        print(Fore.RED + "SONG NOT FOUND" + Fore.RESET)
         return None

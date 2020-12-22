@@ -6,3 +6,6 @@ Music Player/.vscode/*
 env/*
 *.pyc
 env/
+# backend/server/musicapi/static/songs/*
+.idea/*
+backend/server/.vscode/*

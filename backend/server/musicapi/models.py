@@ -1,6 +1,7 @@
 from os import name
 from musicapi import db
 
+
 class User(db.Document):
     username = db.StringField(required=True, unique=True, min_length=3, max_length=12)
     password = db.StringField(required=True, min_length=5)
@@ -9,6 +10,7 @@ class User(db.Document):
         'collection': 'users',
         'indexes': ['username']
     }
+
 
 class Song(db.Document):
     name = db.StringField(required=True)
@@ -25,6 +27,7 @@ class Song(db.Document):
 
     def __repr__(self):
         return name
+
 
 class PlayList(db.Document):
     name = db.StringField(required=True, unique=True)

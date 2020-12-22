@@ -98,8 +98,8 @@ class View (QWidget):
         faceEmotion.faceEmotion()
         emotion = faceEmotion.returnEmotion()
         
-        print(emotion);
-        playsongs = callfunc()
+        # print(emotion);
+        playsongs = callfunc(emotion)
 
 
         
