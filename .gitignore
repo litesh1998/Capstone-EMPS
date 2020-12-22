@@ -5,4 +5,5 @@ Music Player/.vscode/*
 .vscode/*
 env/
 music_emotion.h5
-
+backend/server/.vscode/launch.json
+backend/server/.vscode/tasks.json
