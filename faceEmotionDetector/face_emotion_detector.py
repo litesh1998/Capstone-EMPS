@@ -90,7 +90,7 @@ model.add(Dense(7, activation='softmax'))
 # In[3]:
 
 
-model.load_weights('model.h5')
+model.load_weights('faceEmotionDetector\model.h5')
 model.save("comModel.h5")
 
 # prevents openCL usage and unnecessary logging messages
@@ -106,7 +106,7 @@ while True:
     ret, frame = cap.read()
     if not ret:
         break
-    facecasc = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+    facecasc = cv2.CascadeClassifier('faceEmotionDetector\haarcascade_frontalface_default.xml')
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = facecasc.detectMultiScale(gray,scaleFactor=1.3, minNeighbors=5)
 
