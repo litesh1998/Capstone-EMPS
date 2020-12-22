@@ -1,7 +1,7 @@
 import os
 from musicapi.models import Song
 from colorama import Fore
-
+import random
 
 CWD = os.getcwd()
 SONG_DIR = os.path.join(CWD, 'musicapi', 'static', 'songs')
@@ -31,12 +31,14 @@ def scanAndUpdateDB():
                 # else:
                 #     print(Fore.GREEN + "No change in file path detected..." + Fore.RESET)
         else:
-            emotion = "happy" # this is supposed to come from music classifier
+            emotion_dict = {0: "Angry", 1: "Disgusted", 2: "Fearful", 3: "Happy", 4: "Neutral", 5: "Sad", 6: "Surprised"}
+            emotion = emotion_dict[random.randint(0,6)] # this is supposed to come from music classifier
             song_doc = Song(
                 name=song,
                 path=os.path.join(SONG_DIR, song),
                 emotion=emotion 
             )
+            print(f'{song} found with emotion: {emotion}' )
             song_doc.save()
             # print(Fore.LIGHTCYAN_EX + f"{song} added to database successfully!" + Fore.RESET)
             add += 1
