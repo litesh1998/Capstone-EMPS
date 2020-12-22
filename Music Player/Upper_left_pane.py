@@ -1,15 +1,22 @@
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import Qt, QUrl
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QMenu
-from PyQt5.QtWidgets import QCheckBox, QGroupBox, QMenu, QPushButton, QFileDialog
-from PyQt5.QtWidgets import  QVBoxLayout, QHBoxLayout
-from PyQt5.QtGui import QPainter, QColor, QPalette
-from PyQt5.QtMultimedia import QMediaPlaylist, QMediaPlayer, QMediaContent
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtMultimedia import *
 
-import sys
+from client import callfunc, play_song
+from functools import partial
+from Worker import Worker
+import os, sys, time
+
+cwd = os.path.abspath("../")
+sys.path.insert(1, os.path.join(cwd, "faceEmotionDetector"))
+
+import faceEmotion
+
 class View (QWidget):
-    def __init__(self):
+    def __init__(self, parent):
         super().__init__()
+        self.main = parent
         self.setWindowTitle("Music Player")
         self.setFixedWidth(225)
         self.mainLayout = QVBoxLayout()
@@ -69,15 +76,69 @@ class View (QWidget):
         Btn3.setGeometry(0,70,175,50)
         #Btn3.setFixedSize(175,30)
         Btn3.setStyleSheet("color: black;")
+        
+        detect = QPushButton("&Detect")
+        detect.setFixedSize(175,30)
+        detect.setStyleSheet("color: black;")
+        detect.clicked.connect(self.detect)
+
         vbox = QVBoxLayout()
         vbox.addWidget(Btn1)
         vbox.addWidget(Btn2)
         vbox.addWidget(Btn3)
+        vbox.addWidget(detect)
+
         groupBox.setFixedWidth(200)
         groupBox.setMinimumHeight(300)
         vbox.addStretch(0)
         groupBox.setLayout(vbox)
         return groupBox
+
+    def detect(self):
+        faceEmotion.faceEmotion()
+        emotion = faceEmotion.returnEmotion()
+        
+        # print(emotion);
+        playsongs = callfunc(emotion)
+
+
+        
+
+        # left_pane_layout.addStretch(1)
+        # right_pane_layout = QVBoxLayout()
+
+        # playlist_layout = QVBoxLayout()
+
+        # playlist_heading = QLabel("PLAYLIST")
+        # playlist_heading.setStyleSheet("font-size: 20px; color: #ffffff; margin-bottom: 10px;")
+
+        # playlist_widget = QScrollArea()
+        # playlist_layout.addWidget(playlist_heading)
+        for song in playsongs:
+            button = QPushButton(song['name'])
+            # button.se
+            i = partial(self.helloprint, song['id'])
+            # print("i= ",i)
+            button.clicked.connect(i)
+            self.main.playlist_layout.addWidget(button)
+
+        # self.main.playlist_widget.setWidget(self.main.playlist_layout)
+        # middle_pane_layout.addStretch(1)
+
+
+        self.main.playlist_layout.addWidget(self.main.playlist_widget)
+
+        self.main.middle_pane_layout.addLayout(self.main.playlist_layout)
+        self.main.upper_pane_layout.addLayout(self.main.middle_pane_layout)
+
+
+    def helloprint(self, songid):
+        w = Worker(self.playSong, songid)
+        self.main.threadpool.start(w)
+
+    def playSong(self,songid):
+        print(songid)
+        play_song(songid)
 
     def left_pane_bottom(self):
         NewPlaylist = QPushButton("New Playlist")

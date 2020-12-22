@@ -11,6 +11,7 @@ from flask import Response, make_response
 from musicapi.apiUtil import generate, getSongsList, getSong
 from musicapi import app
 
+
 @app.route('/', methods=['GET'])
 def home():
     # req = request.args
@@ -26,14 +27,17 @@ def home():
 @app.route('/api/<emotion>', methods=['GET'])
 def Emotion(emotion):
     song_list = getSongsList(emotion)
-    
+
     return make_response(song_list)
+
 
 @app.route('/song/<song_id>')
 def SendSong(song_id):
     song = getSong(song_id)
+    headers = {"name": song.name, "path":song.path, "emotion":song.emotion}
     if song:
-        print(song.path)
-        return Response(generate(song.path), mimetype="audio/m4a", headers={"song": song})
+        # print(song.path)
+        # return song
+        return Response(generate(song.path), mimetype="audio/m4a", headers=headers)
     else:
         return Response("Song Not found", status=404)

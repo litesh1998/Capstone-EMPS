@@ -1,8 +1,8 @@
 import vlc, requests, json
 from time import sleep
 
-def callfunc():
-    emotion = 'happy'
+def callfunc(emotion='happy'):
+    # emotion = 'happy'
     URL = f"http://localhost:5000/api/{emotion}"
 
     # objId = '5f081156182ca7df091d040d'
@@ -17,9 +17,9 @@ def callfunc():
 
     playlist = data['songs']
 
-    print("Playlist is:")
-    for song in playlist:
-            print(f"{song['id']}:\t{song['name']}\t|\t{song['emotion']} ")
+    # print("Playlist is:")
+    # for song in playlist:
+    #         print(f"{song['id']}:\t{song['name']}\t|\t{song['emotion']} ")
 
 
     ##TO PLAY THE SONG IN PLAYLIST, UNCOMMENT THE BELOW BLOCK. ALL THE SONGS WILL PLAY IN SEQUENCE
@@ -34,11 +34,18 @@ def callfunc():
     #          while player.is_playing():
     #                 continue
     # print(status)
-    print("Done")
+    # print("Done")
     return(playlist)
 
 def play_song(songid):
-    player = vlc.MediaPlayer(f"http://localhost:5000/song/{songid}")
-    player.play()
-    sleep(10)
-    player.stop()
+    song = requests.get(f"http://localhost:5000/song/{songid}")
+    try:
+        print("Debug: " , song.headers)
+        data = song.headers
+        player = vlc.MediaPlayer(song.headers.get("path"))
+        player.play()
+        sleep(10)
+        player.stop()
+    except Exception as e:
+        print(e)
+    
