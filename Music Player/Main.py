@@ -11,6 +11,9 @@ from time import sleep
 import vlc
 from functools import partial
 from Worker import Worker
+# from arduino import *
+import client
+import arduino
 #import C:/Users/Lipi/OneDrive/Documents/GitHub/Capstone-EMPS/backend/client/caller2.py as CA
 
 # some_file.py
@@ -23,7 +26,7 @@ cwd = os.path.abspath("../")
 sys.path.insert(1, os.path.join(cwd, "faceEmotionDetector"))
 import faceEmotion
 
-from client import callfunc, play_song
+# from client import callfunc, play_song
 
 # playsongs = callfunc()
 # print(playsongs)
@@ -45,6 +48,15 @@ class View (QMainWindow):
         self.upper_pane_layout = QHBoxLayout()
         self.upper_pane()
         self.mainLayout.addLayout(self.lower_pane())
+        self.vlcPlaylist = []
+        self.c = client()
+        self.a = arduino()
+        self.a.addSubscriberForUP(self.c.handlerForUp)
+        self.a.addSubscriberForDOWN(self.c.handlerForDown)
+        self.a.addSubscriberForLEFT(self.c.handlerForLeft)
+        self.a.addSubscriberForRIGHT(self.c.handlerForRight)
+        w = Worker(self.a.startSensing)
+        self.threadpool.start(w)
 
 
     def upper_pane(self):
@@ -110,6 +122,9 @@ class View (QMainWindow):
         lay.addWidget(BP.View(self))
         return lay
 
+# def quitEverything():
+#     app.exec_()
+#     del Worker
 app = QApplication([])
 window = View()
 window.setStyleSheet('''

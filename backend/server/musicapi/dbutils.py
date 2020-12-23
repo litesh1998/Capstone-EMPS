@@ -36,7 +36,7 @@ def scanAndUpdateDB():
             song_doc = Song(
                 name=song,
                 path=os.path.join(SONG_DIR, song),
-                emotion=emotion 
+                emotion=emotion.lower() 
             )
             print(f'{song} found with emotion: {emotion}' )
             song_doc.save()

@@ -55,7 +55,7 @@ def faceEmotion():
             emotion = emotion_dict[maxindex]
             # yield emotion
             global dic
-            if time.time()-dic["time"] >= 10:
+            if time.time()-dic["time"] >= 5:
                 dic = {"Angry": 0, "Disgusted": 0, "Fearful": 0, "Happy": 0,
                        "Neutral": 0, "Sad": 0, "Surprised": 0, "time": time.time()}
                 print(Fore.MAGENTA + "restartin polls" + Fore.RESET)
@@ -71,7 +71,7 @@ def faceEmotion():
             cv2.imshow('Video', cv2.resize(frame,(1600,960),interpolation = cv2.INTER_CUBIC))
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-        if time.time()-t > 10:
+        if time.time()-t > 5:
             break
     print("\n")
     cap.release()

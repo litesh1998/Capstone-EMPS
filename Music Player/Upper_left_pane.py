@@ -2,8 +2,6 @@ from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtMultimedia import *
-
-from client import callfunc, play_song
 from functools import partial
 from Worker import Worker
 import os, sys, time
@@ -31,6 +29,8 @@ class View (QWidget):
         # self.mainLayout.addStretch(1)
         self.player = QMediaPlayer()
         self.playlist = QMediaPlaylist()
+        # self.vlcPlaylist = []
+        # self.main.vlcPlaylist = self.vlcPlaylist
 
     def left_pane_upper(self):
         groupBox = QGroupBox("User Assistance")
@@ -99,7 +99,7 @@ class View (QWidget):
         emotion = faceEmotion.returnEmotion()
         
         # print(emotion);
-        playsongs = callfunc(emotion)
+        playsongs = self.main.c.callfunc(emotion)
 
 
         
@@ -114,10 +114,12 @@ class View (QWidget):
 
         # playlist_widget = QScrollArea()
         # playlist_layout.addWidget(playlist_heading)
+        # self.vlcPlaylist = playsongs
+        # self.parent.vlcPlaylist = playsongs
         for song in playsongs:
             button = QPushButton(song['name'])
             # button.se
-            i = partial(self.helloprint, song['id'])
+            i = partial(self.helloprint, song['id'], playsongs)
             # print("i= ",i)
             button.clicked.connect(i)
             self.main.playlist_layout.addWidget(button)
@@ -132,13 +134,13 @@ class View (QWidget):
         self.main.upper_pane_layout.addLayout(self.main.middle_pane_layout)
 
 
-    def helloprint(self, songid):
-        w = Worker(self.playSong, songid)
+    def helloprint(self, songid, playlist):
+        w = Worker(self.playSong, songid, playlist)
         self.main.threadpool.start(w)
 
-    def playSong(self,songid):
+    def playSong(self,songid, playlist):
         print(songid)
-        play_song(songid)
+        self.main.c.play_song(songid, playlist)
 
     def left_pane_bottom(self):
         NewPlaylist = QPushButton("New Playlist")

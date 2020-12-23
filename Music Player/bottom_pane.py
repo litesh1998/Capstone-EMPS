@@ -27,6 +27,7 @@ class View (QWidget):
         self.mainLayout.addLayout(self.options())
         self.player = QMediaPlayer()
         self.playlist = QMediaPlaylist()
+        # self.vlcPlaylist = self.parent.vlcPlaylist
 
 
     def songInfo(self):
