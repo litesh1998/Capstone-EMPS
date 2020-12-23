@@ -6,18 +6,19 @@ from colorama import Fore
 
 class client():
     def __init__(self):
-        pass
+        self.playlist = []
+        self.emotion = None
 
     def callfunc(self, emotion='happy'):
-        emotion = emotion.lower()
-        URL = f"http://localhost:5000/api/{emotion}"
+        self.emotion = emotion.lower()
+        URL = f"http://localhost:5000/api/{self.emotion}"
         # objId = '5f081156182ca7df091d040d'
         # URL = f"http://localhost:5000/song/{objId}"
         response = requests.get(URL)
         data = json.loads(response.content)
         #print("Playlist is (content):\n", data)
         #print("Playlist is (headers):\n", response.headers)
-        playlist = data['songs']
+        self.playlist = data['songs']
         # print("Playlist is:")
         # for song in playlist:
         #         print(f"{song['id']}:\t{song['name']}\t|\t{song['emotion']} ")
@@ -32,13 +33,13 @@ class client():
         #                 continue
         # print(status)
         # print("Done")
-        return(playlist)
+        return(self.playlist)
 
     def play_song(self, songid, playlist):
         song = requests.get(f"http://localhost:5000/song/{songid}")
         try:
             print("Debug: " , song.headers)
-            data = song.headers
+            # data = song.headers
             player = vlc.MediaPlayer(song.headers.get("path"))
             # wplay = Worker(player.play)
             player.audio_set_volume(100)

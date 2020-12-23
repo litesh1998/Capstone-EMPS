@@ -44,14 +44,22 @@ class arduino(object):
             # sleep(1)
             # g = None
             print(Fore.RED + str(g) + Fore.RESET)
-            if g == 'UP'
+            if g == 'UP':
+                self.HandUp()
+            elif g == 'DOWN':
+                self.HandDown()
+            elif g == 'LEFT':
+                self.HandLeft()
+            elif g == 'RIGHT':
+                self.HandRight()
+
             sleep(15)
 
     def HandUp(self):
         self.UP()
 
     def HandDown(self):
-        self.DOWN():
+        self.DOWN()
 
     def HandLeft(self):
         self.LEFT()
