@@ -8,6 +8,30 @@ class client():
     def __init__(self):
         self.playlist = []
         self.emotion = None
+        self.player = vlc.MediaPlayer()
+        self.songid = None
+
+    def handlerForUp(self):
+        vol = self.player.audio_get_volume()
+        self.player.audio_set_volume(min(vol + 10, 100))
+    
+    def handlerForDown(self):
+        vol = self.player.audio_get_volume()
+        self.player.audio_set_volume(max(vol - 10, 0))
+    
+    def handlerForLeft(self):
+        idx = {}
+        for index, song in enumerate(self.playlist):
+                idx[song["id"]] = index
+        prevsongID = self.playlist[max(idx[self.songid] - 1, 0)]["id"]
+        self.play_song(prevsongID)
+    
+    def handlerForRight(self):
+        idx = {}
+        for index, song in enumerate(self.playlist):
+                idx[song["id"]] = index
+        nextsongID = self.playlist[min(idx[self.songid] + 1, 100)]["id"]
+        self.play_song(nextsongID)
 
     def callfunc(self, emotion='happy'):
         self.emotion = emotion.lower()
@@ -36,14 +60,15 @@ class client():
         return(self.playlist)
 
     def play_song(self, songid, playlist):
+        self.songid = songid
         song = requests.get(f"http://localhost:5000/song/{songid}")
         try:
             print("Debug: " , song.headers)
             # data = song.headers
-            player = vlc.MediaPlayer(song.headers.get("path"))
+            self.player = vlc.MediaPlayer(song.headers.get("path"))
             # wplay = Worker(player.play)
-            player.audio_set_volume(100)
-            player.play()
+            self.player.audio_set_volume(100)
+            self.player.play()
             # print("PLaying in background")
             sleep(5)
             # print("PLaying in background after sleep")
