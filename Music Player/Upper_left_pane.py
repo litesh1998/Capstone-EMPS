@@ -135,8 +135,10 @@ class View (QWidget):
 
 
     def helloprint(self, songid, playlist):
-        w = Worker(self.playSong, songid, playlist)
-        self.main.threadpool.start(w)
+        w1 = Worker(self.playSong, songid, playlist)
+        self.main.threadpool.start(w1)
+        w2 = Worker(self.main.a.startSensing)
+        self.main.threadpool.start(w2)
 
     def playSong(self,songid, playlist):
         print(songid)

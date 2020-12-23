@@ -13,25 +13,29 @@ class client():
 
     def handlerForUp(self):
         vol = self.player.audio_get_volume()
-        self.player.audio_set_volume(min(vol + 10, 100))
+        # self.player.audio_set_volume(min(vol + 10, 100))
+        self.player.audio_set_volume(20)
     
     def handlerForDown(self):
         vol = self.player.audio_get_volume()
-        self.player.audio_set_volume(max(vol - 10, 0))
+        # self.player.audio_set_volume(max(vol - 10, 0))
+        self.player.audio_set_volume(100)
     
     def handlerForLeft(self):
         idx = {}
         for index, song in enumerate(self.playlist):
                 idx[song["id"]] = index
         prevsongID = self.playlist[max(idx[self.songid] - 1, 0)]["id"]
-        self.play_song(prevsongID)
+        self.player.stop()
+        self.play_song(prevsongID, self.playlist)
     
     def handlerForRight(self):
         idx = {}
         for index, song in enumerate(self.playlist):
                 idx[song["id"]] = index
-        nextsongID = self.playlist[min(idx[self.songid] + 1, 100)]["id"]
-        self.play_song(nextsongID)
+        nextsongID = self.playlist[min(idx[self.songid] + 1, len(self.playlist)-1)]["id"]
+        self.player.stop()
+        self.play_song(nextsongID, self.playlist)
 
     def callfunc(self, emotion='happy'):
         self.emotion = emotion.lower()
@@ -105,6 +109,6 @@ class client():
         #             nextsongID = playlist[min(idx[songid] + 1, len(playlist)-1)]["id"]
         #             self.play_song(nextsongID, playlist)
 
-        # except Exception as e:
-        #     print(e)
+        except Exception as e:
+            print(e)
     

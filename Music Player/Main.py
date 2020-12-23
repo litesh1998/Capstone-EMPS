@@ -12,8 +12,8 @@ import vlc
 from functools import partial
 from Worker import Worker
 # from arduino import *
-import client
-import arduino
+from client import client
+from arduino import arduino
 #import C:/Users/Lipi/OneDrive/Documents/GitHub/Capstone-EMPS/backend/client/caller2.py as CA
 
 # some_file.py
@@ -55,8 +55,6 @@ class View (QMainWindow):
         self.a.addSubscriberForDOWN(self.c.handlerForDown)
         self.a.addSubscriberForLEFT(self.c.handlerForLeft)
         self.a.addSubscriberForRIGHT(self.c.handlerForRight)
-        w = Worker(self.a.startSensing)
-        self.threadpool.start(w)
 
 
     def upper_pane(self):
